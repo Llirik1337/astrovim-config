@@ -18,8 +18,10 @@ return {
   },
 
   -- Set colorscheme to use
-  colorscheme = "astrodark",
+  -- colorscheme = "astrodark",
 
+  -- colorscheme = "rose-pine",
+  colorscheme = "catppuccin",
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
     virtual_text = true,
@@ -32,25 +34,8 @@ return {
       -- control auto formatting on save
       format_on_save = {
         enabled = true, -- enable or disable format on save globally
-        allow_filetypes = { -- enable format on save for specified filetypes only
-          -- "go",
-        },
-        ignore_filetypes = { -- disable format on save for specified filetypes
-          -- "python",
-        },
-      },
-      disabled = { -- disable formatting capabilities for the listed language servers
-        -- disable lua_ls formatting capability if you want to use StyLua to format your lua code
-        -- "lua_ls",
       },
       timeout_ms = 1000, -- default format timeout
-      -- filter = function(client) -- fully override the default formatting function
-      --   return true
-      -- end
-    },
-    -- enable servers that you already have installed without mason
-    servers = {
-      -- "pyright"
     },
   },
 
@@ -69,6 +54,19 @@ return {
   -- augroups/autocommands and custom filetypes also this just pure lua so
   -- anything that doesn't fit in the normal config locations above can go here
   polish = function()
+    function _G.set_terminal_keymaps()
+      local opts = { buffer = 0 }
+      vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
+      vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
+      vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
+      vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], opts)
+      vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
+      vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
+      vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], opts)
+    end
+
+    -- if you only want these mappings for toggle term use term://*toggleterm#* instead
+    vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()"
     -- Set up custom filetypes
     -- vim.filetype.add {
     --   extension = {

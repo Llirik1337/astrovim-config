@@ -6,35 +6,63 @@
 return {
   -- first key is the mode
   n = {
-    -- second key is the lefthand side of the map
-
-    -- navigate buffer tabs with `H` and `L`
-    -- L = {
-    --   function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
-    --   desc = "Next buffer",
-    -- },
-    -- H = {
-    --   function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
-    --   desc = "Previous buffer",
-    -- },
-
-    -- mappings seen under group name "Buffer"
-    ["<leader>bD"] = {
-      function()
-        require("astronvim.utils.status").heirline.buffer_picker(
-          function(bufnr) require("astronvim.utils.buffer").close(bufnr) end
-        )
-      end,
-      desc = "Pick to close",
+    ["<leader>r"] = {
+      desc = "Run test",
     },
-    -- tables with the `name` key will be registered with which-key if it's installed
-    -- this is useful for naming menus
-    ["<leader>b"] = { name = "Buffers" },
-    -- quick save
-    -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
+    ["<leader>rr"] = {
+      "<cmd>Neotest run<cr>",
+      desc = "Run the nearest test",
+    },
+    ["<leader>rf"] = {
+      "<cmd>Neotest run file<cr>",
+      desc = "Run the current file",
+    },
+    -- ["<leader>rd"] = {
+    --   function() require("neotest").run.run { strategy = "dap" } end,
+    --   desc = "Debug the nearest test",
+    -- },
+    ["<leader>ra"] = {
+      "<cmd>Neotest attach<cr>",
+      desc = "Attach to the nearest test",
+    },
+    ["<leader>rs"] = {
+      "<cmd>Neotest summary<cr>",
+      desc = "Show summary",
+    },
+    ["<leader>ro"] = {
+      "<cmd>Neotest output<cr>",
+      desc = "Show output",
+    },
+    ["<leader>s"] = {
+      function() require("telescope.builtin").spell_suggest(require("telescope.themes").get_cursor {}) end,
+      desc = "Spelling Suggestions",
+    },
   },
-  t = {
-    -- setting a mapping to false will disable it
-    -- ["<esc>"] = false,
+  i = {
+    ["<C-i>"] = {
+      function() return vim.fn["codeium#Accept"]() end,
+      desc = "Codeium accept",
+      expr = true,
+      silent = true,
+    },
+    ["<C-;>"] = {
+      function() return vim.fn["codeium#CycleCompletions"](1) end,
+      desc = "Codeium next completions",
+      expr = true,
+      silent = true,
+    },
+    ["<C-,>"] = {
+      function() return vim.fn["codeium#CycleCompletions"](-1) end,
+      desc = "Codeium prev completions",
+      expr = true,
+      silent = true,
+    },
+    ["<C-x>"] = {
+      function() return vim.fn["codeium#Clear"]() end,
+      desc = "Codeium cycle completions",
+      expr = true,
+      silent = true,
+    },
   },
+  t = {},
 }
